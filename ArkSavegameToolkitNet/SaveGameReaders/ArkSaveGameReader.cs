@@ -56,7 +56,7 @@ namespace ArkSavegameToolkitNet.SaveGameReaders
             var savedAt = fi.LastWriteTimeUtc;
 
             using var sr = new ArkSaveGameReader(loader);
-            sr._stream = new FileStream(fileName, FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
+            sr._stream = new FileStream(fileName, FileMode.Open, FileAccess.Read, FileShare.Read);
             sr._saveData = new ArkSaveData { fileName = fileName, size = size, savedAt = savedAt };
             sr.ReadBinarySaveData();
 

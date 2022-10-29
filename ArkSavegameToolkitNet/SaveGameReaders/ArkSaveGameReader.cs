@@ -8,7 +8,7 @@ using System.IO;
 
 namespace ArkSavegameToolkitNet.SaveGameReaders
 {
-    [System.Reflection.Obfuscation(ApplyToMembers =true, StripAfterObfuscation = true, Exclude = false, Feature = "renaming")]
+    [System.Reflection.Obfuscation(ApplyToMembers = true, StripAfterObfuscation = true, Exclude = false, Feature = "renaming")]
     internal class ArkSaveGameReader : ArchiveReader
     {
         private static ILog _logger = LogManager.GetLogger("toolkit", "arksavegamereader"); //typeof(ArkSaveGameReader));
@@ -22,7 +22,7 @@ namespace ArkSavegameToolkitNet.SaveGameReaders
 
 
         internal ArkSaveData _saveData;
-        
+
 
         internal int _nameTableOffset;
         internal int _propertiesBlockOffset;
@@ -97,7 +97,7 @@ namespace ArkSavegameToolkitNet.SaveGameReaders
             ReadHeader();
 
             // need name table before reading game objects (seeks to _nameTableOffset)
-            if (_saveData.saveVersion > 5) ReadNameTable(); 
+            if (_saveData.saveVersion > 5) ReadNameTable();
 
             ReadDataFiles();
             ReadEmbeddedData();
@@ -105,7 +105,7 @@ namespace ArkSavegameToolkitNet.SaveGameReaders
 
             ReadGameObjectsAndProperties();
 
-            if (_saveData.saveVersion > 6) ReadHibernationEntries();
+            //if (_saveData.saveVersion > 6) ReadHibernationEntries();
 
             //todo: did not implement _oldNameList reading
             if (_unknownDataFound) throw new NotImplementedException("Have not implemented _oldNameList");
@@ -153,7 +153,7 @@ namespace ArkSavegameToolkitNet.SaveGameReaders
                 {
                     GetInt(out _saveData.saveCount, "saveCount");
                 }
-                
+
                 _dataConsumer.Push(_saveData);
 
             }
@@ -183,7 +183,7 @@ namespace ArkSavegameToolkitNet.SaveGameReaders
                 }
 
                 SetNameTable(nameTable, out _);
-                
+
             }
             finally
             {
@@ -221,7 +221,7 @@ namespace ArkSavegameToolkitNet.SaveGameReaders
             {
                 _structureLog?.PopStack();
             }
-            
+
         }
 
         /// <summary>
@@ -249,7 +249,7 @@ namespace ArkSavegameToolkitNet.SaveGameReaders
             {
                 _structureLog?.PopStack();
             }
-            
+
         }
 
         /// <summary>
@@ -338,7 +338,7 @@ namespace ArkSavegameToolkitNet.SaveGameReaders
                     }
 
                     // hot swap back to object buffer, or do a manual seek
-                    if(!HotSwapBuffer(objectBuffer, ref propBuffer)) SeekTo(objPos);
+                    if (!HotSwapBuffer(objectBuffer, ref propBuffer)) SeekTo(objPos);
 
                     _dataConsumer.Push(obj);
                 }
@@ -383,11 +383,14 @@ namespace ArkSavegameToolkitNet.SaveGameReaders
                     GetInt(out var hibernationUnknown2, "hibernationUnknown2");
                     GetInt(out var ccount, "ccount");
 
-                    var hibernationClasses = new string[ccount];
-                    for (var i = 0; i < ccount; i++)
+                    if (ccount >= 0)
                     {
-                        hibernationClasses[i] = GetString("hibernationClasses");
-                        //todo: hibernation classes is not consumed
+                        var hibernationClasses = new string[ccount];
+                        for (var i = 0; i < ccount; i++)
+                        {
+                            hibernationClasses[i] = GetString("hibernationClasses");
+                            //todo: hibernation classes is not consumed
+                        }
                     }
 
                     GetInt(out var icount, "icount");

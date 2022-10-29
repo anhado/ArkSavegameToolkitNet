@@ -15,8 +15,8 @@ namespace ArkSavegameToolkitNet.TestConsoleApp
     {
         static void Main(string[] args)
         {
-            var savePath = @"C:\save\TheIsland.ark";
-            var clusterPath = @"C:\save\cluster";
+            var savePath = @"D:\asmdata\Servers\Server4\ShooterGame\Saved\\SavedArks\Ragnarok_ArkBot.ark";
+            var clusterPath = @"D:\asmdata\clusters\JustForFunClusertID1";
             var domainOnly = true; //true: optimize loading of the domain model, false: load everything and keep references in memory
 
             // initialize default settings (maps etc.)

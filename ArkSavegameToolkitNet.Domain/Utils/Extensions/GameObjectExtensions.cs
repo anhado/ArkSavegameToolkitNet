@@ -70,7 +70,9 @@ namespace ArkSavegameToolkitNet.Domain.Utils.Extensions
                 var className = self.className.Token;
                 if (className.Equals("PrimalItem_WeaponEmptyCryopod_C", StringComparison.Ordinal))
                     return new ArkItemCryopod(self, saveState);
-
+                else if (className.Equals("SoulTrap_DS_C", StringComparison.Ordinal))
+                    return new ArkItemCryopod(self, saveState);
+                
             }
 
             return new ArkItem(self, saveState);

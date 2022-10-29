@@ -87,7 +87,10 @@ namespace ArkSavegameToolkitNet.Domain
         /// </summary>
         public static void Initialize()
         {
-            foreach (var map in DefaultMaps) ArkToolkitSettings.Instance.Maps.TryAdd(map.Key, map.Value);
+            foreach (var map in DefaultMaps)
+            {
+                ArkToolkitSettings.Instance.Maps.TryAdd(map.Key, map.Value);
+            }
             foreach (var objectType in DefaultObjectTypes) ArkToolkitSettings.Instance.ObjectTypes.TryAdd(objectType.Key, objectType.Value);
         }
     }
